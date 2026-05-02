@@ -77,4 +77,4 @@ def simular_gastos(num_gastos):
             "observaciones": rm.choice(lista_observaciones)
         }
         gastos.append(gasto)
-        return gastos
+    return gastos
