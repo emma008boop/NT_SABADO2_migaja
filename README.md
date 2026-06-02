@@ -19,16 +19,14 @@ El flujo de información se ejecuta de forma síncrona en cada petición web:
     Exposición (main.py): FastAPI despacha la información en un formato JSON plano, ideal para librerías de gráficos en el Front-end (Chart.js, Recharts, etc.).
 
 **Estructura del Proyecto**
-
+```text
 NT_SABADO02_MIGAJA/
 ├── notebook/
-│   ├── __pycache__/
 │   ├── consumo.py              # Cliente HTTP (Requests) hacia Spring Boot
 │   ├── descripcion_gastos.py   # Análisis descriptivo del DataFrame
-│   ├── limpiar_datos.py         # Formateo y limpieza de tipos de datos
+│   ├── limpiar_datos.py        # Formateo y limpieza de tipos de datos
 │   └── transformacion.py       # Agrupaciones y filtros específicos para gráficos
 ├── utils/
-│   ├── __pycache__/
 │   ├── __init__.py
 │   └── simulacion_gastos.py
 ├── venv/                       # Entorno virtual de Python
@@ -36,7 +34,6 @@ NT_SABADO02_MIGAJA/
 ├── main.py                     # Punto de entrada de la API (FastAPI + CORS)
 ├── README.md
 └── requirements.txt            # Dependencias del proyecto
-
 
 > # Requisitos e Instalación
 Prerrequisitos
