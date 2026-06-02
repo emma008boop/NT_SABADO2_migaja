@@ -42,7 +42,7 @@ Prerrequisitos
 
     El servicio de Spring Boot (MigajaApp) ejecutándose en el puerto 8080
 
-## 📊 Visualización en el Front-end
+##  Visualización en el Front-end
 
 El JSON estructurado que devuelve este microservicio está optimizado para ser mapeado directamente en componentes de gráficos de líneas, barras o áreas. A continuación, se muestra un ejemplo de cómo el Front-end renderiza los datos transformados de la tabla `gastos`:
 
