@@ -1,13 +1,49 @@
-from utils.descripcion_gastos import describir_datos_gastos
-from utils.simulacion_gastos import simular_gastos
-from notebook.limpiar_datos import limpiar_datos
 import pandas as pd
+from fastapi import FastAPI, Query
+from fastapi.middleware.cors import CORSMiddleware
 
-df = pd.DataFrame(simular_gastos(1000))
+from notebook.consumo import consumir_servicios
+from notebook.descripcion_gastos import describir_datos_gastos
+from notebook.limpiar_datos import limpiar_datos
+from notebook.transformacion import transformar_datos
 
-df_limpio = limpiar_datos(df)
+app = FastAPI(
+    title="Migaja Analytics API",
+    description="API en Python para procesar y transformar datos de gastos",
+    version="1.0.0",
+)
 
-df_descripcion = describir_datos_gastos(df_limpio)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-print(df_descripcion)
-print(df_limpio)
+
+@app.get("/api/analytics/gastos-por-fecha")
+def obtener_gastos_procesados(
+    tipo_gasto: str = Query(
+        ...,
+        description="El tipo de gasto por el cual filtrar (ej. 'Hogar', 'Alimentacion')",
+    ),
+):
+
+    try:
+        datos_reales = consumir_servicios()
+
+        df = pd.DataFrame(datos_reales)
+        df_limpio = limpiar_datos(df)
+
+        df_transformado = transformar_datos(df_limpio, tipo_gasto)
+
+        resultado_final = df_transformado.to_dict(orient="records")
+
+        return {"status": "success", "tipo_gasto": tipo_gasto, "data": resultado_final}
+
+    except Exception as e:
+        return {
+            "status": "error",
+            "message": f"Error al procesar los datos: {str(e)}",
+        }
